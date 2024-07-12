@@ -14,3 +14,5 @@ Se trata de un prototipo que aprovecha la inteligencia artificial (IA) para eval
 6.	Seguridad alimentaria: El sensor, al detectar cambios en el color, podría potencialmente detectar el desarrollo de enfermedades que afecten la epidermis del ollejo, como el oidio o la botrytis, mejorando no sólo la calidad si no también la seguridad alimentaria.
 
 ![imagen_grape](https://github.com/vacashot/GrapeRipenessSensor/blob/main/Imagen%20de%20WhatsApp%202024-07-09%20a%20las%2014.44.46_d28408eb.jpg)
+
+![imagen_sensorica](https://github.com/vacashot/GrapeRipenessSensor/blob/main/20240709_135442.jpg)
