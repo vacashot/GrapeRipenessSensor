@@ -16,3 +16,5 @@ Se trata de un prototipo que aprovecha la inteligencia artificial (IA) para eval
 ![imagen_grape](https://github.com/vacashot/GrapeRipenessSensor/blob/main/Imagen%20de%20WhatsApp%202024-07-09%20a%20las%2014.44.46_d28408eb.jpg)
 
 ![imagen_sensorica](https://github.com/vacashot/GrapeRipenessSensor/blob/main/20240709_135442.jpg)
+
+![imagen_completinstalation](https://github.com/vacashot/GrapeRipenessSensor/blob/main/20240709_135456.jpg)
