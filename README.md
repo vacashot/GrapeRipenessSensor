@@ -38,3 +38,5 @@ Se trata de un prototipo que aprovecha la inteligencia artificial (IA) para eval
 2. En condicines de oscuridad, tapa cerrada y espuma de cable puesta
 3. Si se repiten medidas se indica como ID ZZ/XX/YY/bis
 4. Es importante que la baya este pegada al sensor a la misma distancia, y en el parte media de la baya
+
+![imagen_instruccionesn]https://github.com/vacashot/GrapeRipenessSensor/blob/main/ITACyL_2024/instrucciones.JPG
