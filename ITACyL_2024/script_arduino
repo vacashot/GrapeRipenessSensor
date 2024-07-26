@@ -1,0 +1,180 @@
+// Incluir las librerías para el sensor de color DFRobot_AS7341 y el datalogger SD
+#include "DFRobot_AS7341.h"
+#include <RTClib.h>
+#include <Wire.h>
+#include <SD.h>
+
+// set up variables using el SD utility library functions:
+DFRobot_AS7341 as7341;
+RTC_DS1307 RTC;
+Sd2Card card;
+SdVolume volume;
+SdFile root;
+File logfile;
+String id;  // variable para almacenar el número ingresado por el usuario
+String brix; // variable para almacenar el texto ingresado por el usuario
+const int chipSelect = 10;
+
+
+void setup() {
+  // Inicializar el monitor serial
+  Serial.begin(115200);
+  Wire.begin();
+
+  // Inicia el RTC
+  RTC.begin();
+  if (!RTC.isrunning()) {
+    Serial.println("RTC is NOT running!");
+    // Ajustar la fecha y hora en la que se compiló este código
+     RTC.adjust(DateTime(__DATE__, __TIME__));
+  }
+
+  // Inicia el datalogger SD
+  if (!SD.begin(chipSelect))
+    Serial.println("No hay tarjeta SD.");
+  else
+    Serial.println("Tarjeta SD inicializada.");
+  logfile = SD.open("Registro.txt", FILE_WRITE);
+  // Escribe el encabezado si aún no se ha escrito
+  // Escribe el encabezado antes de cada registro
+  logfile.println("id;hora;fecha;F1;F2;F3;F4;F5;F6;F7;F8;F9;CLEAR;NIR;BRIX;");
+
+  // Inicializar el sensor de color
+  while (as7341.begin() != 0) {
+    Serial.println("IIC init failed, please check if the wire connection is correct");
+    delay(1000);
+  }
+
+  // Habilitar LED del sensor (opcional, si es necesario)
+  as7341.controlLed(5); // la intensidad del led va de 0 a 20; especificamos intensidad = 5//
+}
+
+void loop() {
+  // Obtener la fecha y hora actual del reloj en tiempo real
+  DateTime now = RTC.now();
+  Serial.print(now.day());
+  Serial.print("/");
+  Serial.print(now.month());
+  Serial.print("/");
+  Serial.print(now.year());
+  Serial.print(" ; ");
+  Serial.print(now.hour());
+  Serial.print(":");
+  Serial.print(now.minute());
+  Serial.print(":");
+  Serial.print(now.second());
+  Serial.println("-----------------------------------------------------------------------------");
+
+  // Leer el ID desde el monitor serial
+  Serial.print("Introduce el ID de la muestra: ");  // Solicita al usuario que ingrese un texto
+  while (Serial.available() == 0);
+  id = Serial.readStringUntil('\n');  // Lee el texto ingresado por el usuario
+  Serial.print("ID= ");  // Muestra el texto ingresado por el usuario en el monitor serial
+  Serial.println(id);
+  delay(1000);
+
+  // Esperar hasta que se reciba un carácter desde el monitor serial
+  Serial.println("\\\\\\\\\Presiona INTRO para realizar la medida con el sensor////////");
+  while (Serial.available() == 0);
+  Serial.read(); // Descartar el carácter introducido
+
+  // Encender el LED antes de iniciar la medición
+  as7341.enableLed(true);
+  delay(10000); // 10 seg LED encendido 
+
+  // Medir el color con el sensor 
+  DFRobot_AS7341::sModeOneData_t data1;
+  DFRobot_AS7341::sModeTwoData_t data2;
+
+  as7341.startMeasure(as7341.eF1F4ClearNIR);
+  data1 = as7341.readSpectralDataOne();
+  Serial.print("F1(405-425nm):");
+  Serial.println(data1.ADF1);
+  Serial.print("F2(435-455nm):");
+  Serial.println(data1.ADF2);
+  Serial.print("F3(470-490nm):");
+  Serial.println(data1.ADF3);
+  Serial.print("F4(505-525nm):");
+  Serial.println(data1.ADF4);
+
+  delay(1000);
+
+  as7341.startMeasure(as7341.eF5F8ClearNIR);
+  data2 = as7341.readSpectralDataTwo();
+  Serial.print("F5(545-565nm):");
+  Serial.println(data2.ADF5);
+  Serial.print("F6(580-600nm):");
+  Serial.println(data2.ADF6);
+  Serial.print("F7(620-640nm):");
+  Serial.println(data2.ADF7);
+  Serial.print("F8(670-690nm):");
+  Serial.println(data2.ADF8);
+  Serial.print("Clear:");
+  Serial.println(data2.ADCLEAR);
+  Serial.print("NIR:");
+  Serial.println(data2.ADNIR);
+
+  delay(2000); // Espera de 2 segundos después de realizar la medición
+
+  // Apagar el LED después de finalizar la medición
+  as7341.enableLed(false);
+
+  // Leer el valor BRIX desde el monitor serial
+  Serial.println("Introduce el valor BRIX:");
+  while (Serial.available() == 0);
+  brix = Serial.readStringUntil('\n');
+  Serial.print("BRIX introducido: ");
+  Serial.println(brix);
+
+
+  // Configuración del datalogger
+  logfile.println();
+  logfile.print(id);
+  logfile.print(";");
+   // Formateo de la hora
+  if (now.hour() < 10) logfile.print('0');
+  logfile.print(now.hour(), DEC);
+  logfile.print(":");
+  if (now.minute() < 10) logfile.print('0');
+  logfile.print(now.minute(), DEC);
+  logfile.print(":");
+  if (now.second() < 10) logfile.print('0');
+  logfile.print(now.second(), DEC);
+  logfile.print(";");
+
+  // Formateo de la fecha
+  if (now.day() < 10) logfile.print('0');
+  logfile.print(now.day(), DEC);
+  logfile.print("/");
+  if (now.month() < 10) logfile.print('0');
+  logfile.print(now.month(), DEC);
+  logfile.print("/");
+  logfile.print(now.year(), DEC);
+  logfile.print(";");
+  // Sensor
+  logfile.print(data1.ADF1);
+  logfile.print(";");
+  logfile.print(data1.ADF2);
+  logfile.print(";");
+  logfile.print(data1.ADF3);
+  logfile.print(";");
+  logfile.print(data1.ADF4);
+  logfile.print(";");
+  logfile.print(data2.ADF5);
+  logfile.print(";");
+  logfile.print(data2.ADF6);
+  logfile.print(";");
+  logfile.print(data2.ADF7);
+  logfile.print(";");
+  logfile.print(data2.ADF8);
+  logfile.print(";");
+  logfile.print(data2.ADCLEAR);
+  logfile.print(";");
+  logfile.print(data2.ADNIR);
+  logfile.print(";");
+  logfile.print(brix);
+  logfile.print(";");
+  logfile.flush();
+
+  delay(1000);  // Espera un segundo antes de repetir el ciclo
+}
