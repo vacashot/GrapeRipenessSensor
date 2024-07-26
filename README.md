@@ -18,3 +18,23 @@ Se trata de un prototipo que aprovecha la inteligencia artificial (IA) para eval
 ![imagen_sensorica](https://github.com/vacashot/GrapeRipenessSensor/blob/main/20240709_135442.jpg)
 
 ![imagen_completinstalation](https://github.com/vacashot/GrapeRipenessSensor/blob/main/20240709_135456.jpg)
+
+### PROTOCOLO PARA TOMA MUESTRAS
+1. Muestras de tempranillo. Parte media del racimo, todas del mismo color y en buen estado sanitario
+2.  Entre 5 y 10 muestras por día
+3.  Cada muestra es un bulk de 10 bayas ( se ira reduciendo el número de bayas, para cubrir el mosto con el refractómetro, lo ideal una baya una medida con el refráctometro)
+4.  Primero se realizan las medidas con el sensor y despues con el Refráctometro
+5.  Para identificar las muestras utilizamos el ID de ZZZ/XX/YY:  ZZZ= numero de muestras (0-999) / XX= número de bulk (5-10)/ YY= número de baya (1-10)
+6.  Anotar el estado fenologico en el estadillo
+### INSTRUCCIONES SENSOR 
+1. INICIAMOS ARDUINO IDE
+2. SELECCIONAMOS PLACA: ARDUINO UNO
+3. PUERTO COM USB
+4. ACTIVAMOS "MONITOR SERIAL"
+5. SELECCIONAMOS 115200 bauds
+6. SEGUIMOS INSTRUCCIONES EN PANTALLA
+### PROTOCOLO MEDIDA CON SENSOR
+1. Luz led a 5 de intensidad
+2. En condicines de oscuridad, tapa cerrada y espuma de cable puesta
+3. Si se repiten medidas se indica como ID ZZ/XX/YY/bis
+4. Es importante que la baya este pegada al sensor a la misma distancia, y en el parte media de la baya
