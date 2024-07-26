@@ -40,4 +40,4 @@ Se trata de un prototipo que aprovecha la inteligencia artificial (IA) para eval
 4. Es importante que la baya este pegada al sensor a la misma distancia, y en el parte media de la baya
 
 ![imagen_instruccionesn](https://github.com/vacashot/GrapeRipenessSensor/blob/main/ITACyL_2024/instrucciones.JPG)
-![imagen_instruccionesn](ITACyL_2024/estados_fenologicos_de_la_vid_1_20150202_1544847080.jpg](https://github.com/vacashot/GrapeRipenessSensor/blob/main/ITACyL_2024/estados_fenologicos_de_la_vid_1_20150202_1544847080.jpg)
+![imagen_instonesn](https://github.com/vacashot/GrapeRipenessSensor/blob/main/ITACyL_2024/estados_fenologicos_de_la_vid_1_20150202_1544847080.jpg)
